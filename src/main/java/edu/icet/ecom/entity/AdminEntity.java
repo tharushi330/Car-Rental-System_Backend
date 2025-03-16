@@ -1,7 +1,7 @@
-package edu.icet.ecom.dto;
+package edu.icet.ecom.entity;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,20 +12,22 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Admin {
-
+@Entity
+@Table(name = "admin")
+public class AdminEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long adminID;
 
-    @NotEmpty(message = "AdminName should not be blank")
+    @Column(nullable = false)
     private String adminName;
 
-    @NotEmpty(message = "Email should not be blank")
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @NotEmpty(message = "Password should not be blank")
+    @Column(nullable = false)
     private String password;
 
-    @NotEmpty(message = "Contact number should not be blank")
-    @Size(min = 10, max = 10, message = "Contact number must be exactly 10 digits")
+    @Column(nullable = false, length = 10)
     private String contactNumber;
 }

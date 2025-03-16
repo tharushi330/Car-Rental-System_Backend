@@ -4,12 +4,15 @@ import edu.icet.ecom.dto.Vehicle;
 import edu.icet.ecom.entity.VehicleEntity;
 import edu.icet.ecom.repository.VehicleRepository;
 import edu.icet.ecom.service.VehicleService;
+import edu.icet.ecom.util.VehicleStatus;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,8 +22,19 @@ public class VehicleServiceImpl implements VehicleService {
     private final ModelMapper mapper;
 
     @Override
-    public void addVehicle(Vehicle vehicle) {
-        repository.save(mapper.map(vehicle, VehicleEntity.class));
+    public void addVehicle(String model, String brand, String fuelType, String year, Double pricePerDay, VehicleStatus status, String imageURL, String description) {
+        VehicleEntity vehicleEntity = new VehicleEntity();
+        vehicleEntity.setModel(model);
+        vehicleEntity.setBrand(brand);
+        vehicleEntity.setFuelType(fuelType);
+        vehicleEntity.setYear(year);
+        vehicleEntity.setPricePerDay(pricePerDay);
+        vehicleEntity.setStatus(status);
+        vehicleEntity.setImageURL(imageURL);
+        vehicleEntity.setDescription(description);
+
+        repository.save(vehicleEntity);
+
     }
 
     @Override
@@ -42,8 +56,25 @@ public class VehicleServiceImpl implements VehicleService {
 
 
     @Override
-    public void updateVehicle(Vehicle vehicle) {
-        repository.save(mapper.map(vehicle,VehicleEntity.class));
+    public void updateVehicle(Vehicle vehicle,Long vehicleID) {
+        Optional<VehicleEntity> sOpt = repository.findById(vehicleID);
+
+        if (sOpt.isPresent()) {
+            VehicleEntity existCus = sOpt.get();
+            existCus.setModel(vehicle.getModel());
+            existCus.setBrand(vehicle.getBrand());
+            existCus.setFuelType(vehicle.getFuelType());
+            existCus.setYear(vehicle.getYear());
+            existCus.setPricePerDay(vehicle.getPricePerDay());
+            existCus.setStatus(vehicle.getStatus());
+            existCus.setImageURL(vehicle.getImageURL());
+            existCus.setDescription(vehicle.getDescription());
+
+            repository.save(existCus);
+        } else {
+            throw new EntityNotFoundException("Vehicle with ID " + vehicleID + " not found.");
+
+        }
     }
 
     @Override

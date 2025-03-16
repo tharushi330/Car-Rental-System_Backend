@@ -21,8 +21,11 @@ public class VehicleEntity {
     private String brand;
     private String fuelType;
     private String year;
-    private String pricePerDay;
+    private Double pricePerDay;
+
+    @Enumerated(EnumType.STRING)
     private VehicleStatus status;
+
     private String imageURL;
     private String description;
 }

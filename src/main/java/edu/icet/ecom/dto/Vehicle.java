@@ -14,10 +14,10 @@ public class Vehicle {
     private Long vehicleID;
 
     @NotEmpty(message = "This should not be blank")
-    private String brand;
+    private String model;
 
     @NotEmpty(message = "This should not be blank")
-    private String model;
+    private String brand;
 
     @NotEmpty(message = "This should not be blank")
     private String fuelType;
@@ -26,13 +26,13 @@ public class Vehicle {
     private String year;
 
     @NotEmpty(message = "This should not be blank")
-    private String pricePerDay;
+    private Double pricePerDay;
 
     @NotEmpty(message = "This should not be blank")
     private VehicleStatus status;
 
     @NotEmpty(message = "This should not be blank")
-    private String imageURl;
+    private String imageURL;
 
     @NotEmpty(message = "This should not be blank")
     private String description;
