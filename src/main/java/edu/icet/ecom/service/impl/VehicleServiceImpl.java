@@ -22,20 +22,28 @@ public class VehicleServiceImpl implements VehicleService {
     private final ModelMapper mapper;
 
     @Override
-    public void addVehicle(String model, String brand, String fuelType, String year, Double pricePerDay, VehicleStatus status, String imageURL, String description) {
+    public void addVehicle(String model, String brand, String fuelType, String year, Double pricePerDay, String statusStr, String imageURL, String description) {
         VehicleEntity vehicleEntity = new VehicleEntity();
         vehicleEntity.setModel(model);
         vehicleEntity.setBrand(brand);
         vehicleEntity.setFuelType(fuelType);
         vehicleEntity.setYear(year);
         vehicleEntity.setPricePerDay(pricePerDay);
-        vehicleEntity.setStatus(status);
+
+        try {
+            VehicleStatus status = VehicleStatus.valueOf(statusStr.toUpperCase().trim());
+            vehicleEntity.setStatus(status);
+        } catch (IllegalArgumentException | NullPointerException e) {
+            throw new RuntimeException("Invalid vehicle status: " + statusStr);
+        }
+
         vehicleEntity.setImageURL(imageURL);
         vehicleEntity.setDescription(description);
-
         repository.save(vehicleEntity);
 
     }
+
+
 
     @Override
     public List<Vehicle> getAll() {
@@ -66,14 +74,21 @@ public class VehicleServiceImpl implements VehicleService {
             existCus.setFuelType(vehicle.getFuelType());
             existCus.setYear(vehicle.getYear());
             existCus.setPricePerDay(vehicle.getPricePerDay());
-            existCus.setStatus(vehicle.getStatus());
+
+            // Convert status safely
+            try {
+                VehicleStatus status = VehicleStatus.valueOf(vehicle.getStatus().toUpperCase().trim());
+                existCus.setStatus(status);
+            } catch (IllegalArgumentException | NullPointerException e) {
+                throw new RuntimeException("Invalid vehicle status: " + vehicle.getStatus());
+            }
+
             existCus.setImageURL(vehicle.getImageURL());
             existCus.setDescription(vehicle.getDescription());
 
             repository.save(existCus);
         } else {
             throw new EntityNotFoundException("Vehicle with ID " + vehicleID + " not found.");
-
         }
     }
 

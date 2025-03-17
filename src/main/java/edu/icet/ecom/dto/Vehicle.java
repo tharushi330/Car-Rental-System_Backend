@@ -29,7 +29,7 @@ public class Vehicle {
     private Double pricePerDay;
 
     @NotEmpty(message = "This should not be blank")
-    private VehicleStatus status;
+    private String status; // Change from VehicleStatus to String
 
     @NotEmpty(message = "This should not be blank")
     private String imageURL;
