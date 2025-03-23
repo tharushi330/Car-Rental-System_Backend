@@ -1,3 +1,4 @@
+
 package edu.icet.ecom.entity;
 
 import edu.icet.ecom.util.VehicleStatus;
@@ -27,5 +28,9 @@ public class VehicleEntity {
     private VehicleStatus status;
 
     private String imageURL;
+    @Column(columnDefinition = "TEXT")
     private String description;
+    private String vehiclecategory;
+
+
 }

@@ -14,6 +14,9 @@ public class Vehicle {
     private Long vehicleID;
 
     @NotEmpty(message = "This should not be blank")
+    private String vehiclecategory; // Added vehicle type field
+
+    @NotEmpty(message = "This should not be blank")
     private String model;
 
     @NotEmpty(message = "This should not be blank")

@@ -20,6 +20,7 @@ public class VehicleController {
     public void addVehicle(@RequestBody Vehicle vehicle){
         service.addVehicle(
                 vehicle.getModel(),
+                vehicle.getVehiclecategory(), // Added vehicletype
                 vehicle.getBrand(),
                 vehicle.getFuelType(),
                 vehicle.getYear(),

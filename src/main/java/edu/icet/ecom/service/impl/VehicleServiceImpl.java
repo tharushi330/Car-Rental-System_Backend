@@ -22,8 +22,9 @@ public class VehicleServiceImpl implements VehicleService {
     private final ModelMapper mapper;
 
     @Override
-    public void addVehicle(String model, String brand, String fuelType, String year, Double pricePerDay, String statusStr, String imageURL, String description) {
+    public void addVehicle(String vehiclecategory,String model, String brand, String fuelType, String year, Double pricePerDay, String statusStr, String imageURL, String description) {
         VehicleEntity vehicleEntity = new VehicleEntity();
+        vehicleEntity.setVehiclecategory(vehiclecategory);
         vehicleEntity.setModel(model);
         vehicleEntity.setBrand(brand);
         vehicleEntity.setFuelType(fuelType);
@@ -69,6 +70,7 @@ public class VehicleServiceImpl implements VehicleService {
 
         if (sOpt.isPresent()) {
             VehicleEntity existCus = sOpt.get();
+            existCus.setVehiclecategory(vehicle.getVehiclecategory());
             existCus.setModel(vehicle.getModel());
             existCus.setBrand(vehicle.getBrand());
             existCus.setFuelType(vehicle.getFuelType());

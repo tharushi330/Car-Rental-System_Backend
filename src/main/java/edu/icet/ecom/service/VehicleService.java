@@ -6,7 +6,7 @@ import edu.icet.ecom.util.VehicleStatus;
 import java.util.List;
 
 public interface VehicleService {
-    void addVehicle(String model, String brand, String fuelType, String year, Double pricePerDay, String status, String imageURL, String description);
+    void addVehicle(String vehiclecategory,String model, String brand, String fuelType, String year, Double pricePerDay, String status, String imageURL, String description);
 
     List<Vehicle> getAll();
 
